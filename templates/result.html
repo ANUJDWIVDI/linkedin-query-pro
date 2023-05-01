@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Results</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #007bff;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <h1>Search Results</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>URN ID</th>
+                <th>Name</th>
+                <th>Public ID</th>
+                <th>Distance</th>
+                <th>Tracking ID</th>
+                <th>Job Title</th>
+                <th>Location</th>
+                <th>Email</th>
+                <th>Phone</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for result in data %}
+                <tr>
+                    <td>{{ result['urn_id'] }}</td>
+                    <td>{{ result['name'] }}</td>
+                    <td>{{ result['public_id'] }}</td>
+                    <td>{{ result['distance'] }}</td>
+                    <td>{{ result['tracking_id'] }}</td>
+                    <td>{{ result['jobtitle'] }}</td>
+                    <td>{{ result['location'] }}</td>
+                    <td>{{ result.get('email_address', '') }}</td>
+                    <td>{{ result.get('phone_numbers', [''])[0] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="/download" class="btn btn-primary">Download Results</a>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+

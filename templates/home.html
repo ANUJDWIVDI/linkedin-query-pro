@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Home</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  </head>
+    <body>
+    <div class="container">
+      <h1>Search Form</h1>
+      <form action="/submit" method="POST">
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="email" class="form-control" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+          <label for="password">API Password:</label>
+          <input type="password" class="form-control" id="password" name="password" required>
+        </div>
+        <div class="form-group">
+          <label for="search_keywords">Search Keywords:</label>
+          <input type="text" class="form-control" id="search_keywords" name="search_keywords" required>
+        </div>
+        <div class="form-group">
+          <label for="location">Location:</label>
+          <input type="text" class="form-control" id="location" name="location" required>
+        </div>
+        <div class="form-group">
+          <label for="popular_keywords">Popular Keywords:</label><br>
+          {% for keyword in popular_keywords %}
+          <a href="#" onclick="fillKeywordForm('{{ keyword }}'); return false;">{{ keyword }}</a>
+          {% endfor %}
+          <input type="hidden" id="popular_keywords" name="popular_keywords" value="{{ popular_keywords|join(', ') }}">
+        </div>
+        <div class="form-group">
+          <label for="popular_locations">Popular Locations:</label><br>
+          {% for location in popular_locations %}
+          <a href="#" onclick="fillLocationForm('{{ location }}'); return false;">{{ location }}</a>
+          {% endfor %}
+          <input type="hidden" id="popular_locations" name="popular_locations" value="{{ popular_locations|join(', ') }}">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+  function fillKeywordForm(keyword) {
+    document.getElementById("search_keywords").value = keyword;
+  }
+
+  function fillLocationForm(location) {
+    document.getElementById("location").value = location;
+  }
+
+  $(document).ready(function() {
+    var popular_keywords = $('#popular_keywords').val().split(', ');
+    var popular_locations = $('#popular_locations').val().split(', ');
+
+    $.each(popular_keywords, function(index, value) {
+      $('#popular_keywords').after('<a href="#" onclick="fillKeywordForm(\'' + value + '\'); return false;">' + value + '</a>&nbsp;');
+    });
+
+    $.each(popular_locations, function(index, value) {
+      $('#popular_locations').after('<a href="#" onclick="fillLocationForm(\'' + value + '\'); return false;">' + value + '</a>&nbsp;');
+    });
+  });
+</script>
+    </body>
+</html>
